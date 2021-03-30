@@ -1,0 +1,45 @@
+﻿@model IEnumerable<WebAppStudomat.Models.StudentClasses>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Class enrollments for students</h2>
+
+<p>
+    @Html.ActionLink("Enroll new student", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Class name
+        </th>
+        <th>
+            Students name
+        </th>
+        <th>
+            Date of enrollment
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Class.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfEnrollment.Date)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>

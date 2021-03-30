@@ -1,0 +1,64 @@
+﻿@model IEnumerable<WebAppStudomat.Models.Grade>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Grades</h2>
+
+<p>
+    @Html.ActionLink("Add grade", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Class name
+        </th>
+        <th>
+            Student name
+        </th>
+        <th>
+            Grade
+        </th>
+        <th>
+            Date of grade
+        </th>
+        <th>
+            Teachers name
+        </th>
+        <th>
+            Ects
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var group in Model.GroupBy(item => item.Class.ID))
+    {
+        foreach (var item in group)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Class.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GradeInt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfGrade)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Class.Teacher.FullNameWithTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Class.NumberOfECTS)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+                </td>
+            </tr>}
+    }
+
+</table>

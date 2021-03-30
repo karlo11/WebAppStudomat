@@ -1,0 +1,50 @@
+﻿@model WebAppStudomat.Models.Grade
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Grade</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Class.Details)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Class.Details)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Student.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Student.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GradeInt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GradeInt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfGrade)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfGrade)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

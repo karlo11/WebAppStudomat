@@ -1,0 +1,76 @@
+﻿@model IEnumerable<WebAppStudomat.Models.Class>
+
+@{
+    ViewBag.Title = "Classes";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("New class", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Class name
+        </th>
+        <th>
+            Major name
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Semester)
+        </th>
+        <th>
+            ECTS
+        </th>
+        <th>
+            Teacher
+        </th>
+        <th>
+            ISVU number
+        </th>
+        <th>
+            Hours of work
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Details)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Major.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Semester)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfECTS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Teacher.FullNameWithTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ISVUNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoursOfWork)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Details)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
