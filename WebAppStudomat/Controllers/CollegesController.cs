@@ -46,7 +46,7 @@ namespace WebAppStudomat.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Address")] College college)
+        public ActionResult Create([Bind(Include = "ID,Name,Address,FoundationYear,DeanFirstName,DeanLastName")] College college)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace WebAppStudomat.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Address")] College college)
+        public ActionResult Edit([Bind(Include = "ID,Name,Address,FoundationYear,DeanFirstName,DeanLastName")] College college)
         {
             if (ModelState.IsValid)
             {

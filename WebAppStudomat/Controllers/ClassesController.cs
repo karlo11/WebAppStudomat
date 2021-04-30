@@ -80,7 +80,7 @@ namespace WebAppStudomat.Controllers
                 return HttpNotFound();
             }
             ViewBag.MajorID = new SelectList(db.Majors, "ID", "Name", @class.MajorID);
-            ViewBag.TeacherID = new SelectList(db.Teachers, "ID", "OIB", @class.TeacherID);
+            ViewBag.TeacherID = new SelectList(db.Teachers, "ID", "FullNameWithTitle", @class.TeacherID);
             return View(@class);
         }
 
@@ -98,7 +98,7 @@ namespace WebAppStudomat.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.MajorID = new SelectList(db.Majors, "ID", "Name", @class.MajorID);
-            ViewBag.TeacherID = new SelectList(db.Teachers, "ID", "OIB", @class.TeacherID);
+            ViewBag.TeacherID = new SelectList(db.Teachers, "ID", "FullNameWithTitle", @class.TeacherID);
             return View(@class);
         }
 

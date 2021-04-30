@@ -19,5 +19,13 @@ namespace WebAppStudomat.Models
         public string ViceDeanLastName { get; set; }
 
         public virtual ICollection<Class> Classes { get; set; }
+
+        public string ViceDeanFullName
+        {
+            get
+            {
+                return ViceDeanFirstName + " " + ViceDeanLastName;
+            }
+        }
     }
 }

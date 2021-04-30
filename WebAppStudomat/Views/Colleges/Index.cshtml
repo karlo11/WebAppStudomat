@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<WebAppStudomat.Models.College>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "College";
 }
 
 <h2>College</h2>
@@ -14,6 +14,12 @@
         <th>
             @Html.DisplayNameFor(model => model.Address)
         </th>
+        <th>
+            Foundation year
+        </th>
+        <th>
+            Dean
+        </th>
         <th></th>
     </tr>
 
@@ -25,6 +31,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FoundationYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeanFullName)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
