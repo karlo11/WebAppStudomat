@@ -197,6 +197,26 @@
     <Compile Include="Migrations\202103310019047_AddedUsers.Designer.cs">
       <DependentUpon>202103310019047_AddedUsers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104302119276_users2.cs" />
+    <Compile Include="Migrations\202104302119276_users2.Designer.cs">
+      <DependentUpon>202104302119276_users2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104302121443_users3.cs" />
+    <Compile Include="Migrations\202104302121443_users3.Designer.cs">
+      <DependentUpon>202104302121443_users3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104302236152_users4.cs" />
+    <Compile Include="Migrations\202104302236152_users4.Designer.cs">
+      <DependentUpon>202104302236152_users4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104302245363_removed-user.cs" />
+    <Compile Include="Migrations\202104302245363_removed-user.Designer.cs">
+      <DependentUpon>202104302245363_removed-user.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104302248187_added_users2.cs" />
+    <Compile Include="Migrations\202104302248187_added_users2.Designer.cs">
+      <DependentUpon>202104302248187_added_users2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Class.cs" />
     <Compile Include="Models\College.cs" />
@@ -282,6 +302,8 @@
     <Content Include="Views\Grades\Details.cshtml" />
     <Content Include="Views\Grades\Edit.cshtml" />
     <Content Include="Views\Grades\Index.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -341,6 +363,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103310019047_AddedUsers.resx">
       <DependentUpon>202103310019047_AddedUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104302119276_users2.resx">
+      <DependentUpon>202104302119276_users2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104302121443_users3.resx">
+      <DependentUpon>202104302121443_users3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104302236152_users4.resx">
+      <DependentUpon>202104302236152_users4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104302245363_removed-user.resx">
+      <DependentUpon>202104302245363_removed-user.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104302248187_added_users2.resx">
+      <DependentUpon>202104302248187_added_users2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

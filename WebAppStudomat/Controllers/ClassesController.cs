@@ -17,12 +17,21 @@ namespace WebAppStudomat.Controllers
         // GET: Classes
         public ActionResult Index()
         {
-            var classes = db.Classes.Include(m => m.Major).Include(t => t.Teacher);
-            return View(classes.ToList()
-                .OrderBy(t => t.Major.ID)
-                .ThenBy(x => x.Semester)
-                .ThenByDescending(y => y.NumberOfECTS)
-                .ThenBy(z => z.Name));
+            if (Session["IdUser"] != null)
+            {
+                ViewBag.UserNow = Session["FullName"].ToString();
+                var classes = db.Classes.Include(m => m.Major).Include(t => t.Teacher);
+
+                return View(classes.ToList()
+                    .OrderBy(t => t.Major.ID)
+                    .ThenBy(x => x.Semester)
+                    .ThenByDescending(y => y.NumberOfECTS)
+                    .ThenBy(z => z.Name));
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+            }
         }
 
         // GET: Classes/Details/5

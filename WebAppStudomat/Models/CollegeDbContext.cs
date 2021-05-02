@@ -15,5 +15,6 @@ namespace WebAppStudomat.Models
         public DbSet<Student> Students { get; set; }
         public DbSet<StudentClasses> StudentClasses { get; set; }
         public DbSet<Grade> Grades { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }
