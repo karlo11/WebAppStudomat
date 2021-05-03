@@ -1,12 +1,25 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WebAppStudomat.Models
+namespace WebAppStudomat.Models.Users
 {
     public class User
     {
         [Key]
         public int IdUser { get; set; }
+
+        public UserRoles userRole;
+        public UserRoles UserRole
+        {
+            get
+            {
+                return userRole;
+            }
+            set
+            {
+                userRole = UserRoles.Teacher;
+            }
+        }
 
         public string Username { get; set; }
         [Required]

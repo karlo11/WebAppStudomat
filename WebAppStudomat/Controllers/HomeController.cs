@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using WebAppStudomat.Models;
 using System.Security.Cryptography;
 using System.Text;
+using WebAppStudomat.Models.Users;
 
 namespace WebAppStudomat.Controllers
 {
@@ -15,13 +14,7 @@ namespace WebAppStudomat.Controllers
 
         public ActionResult Index()
         {
-            if (Session["IdUser"] != null)
-            {
-                ViewBag.UserNow = Session["FullName"].ToString();
-                return View();
-            }
-            else
-                return RedirectToAction("Login");
+            return View();
         }
 
         public ActionResult Register()
@@ -41,9 +34,10 @@ namespace WebAppStudomat.Controllers
                 {
                     user.Password = GetMD5(user.Password);
                     db.Configuration.ValidateOnSaveEnabled = false;
+                    user.UserRole = UserRoles.Teacher;
                     db.Users.Add(user);
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Login");
                 }
                 else
                 {
@@ -114,6 +108,9 @@ namespace WebAppStudomat.Controllers
                     Session["Email"] = data.FirstOrDefault().Email;
                     Session["FullName"] = data.FirstOrDefault().FullName;
                     Session["Username"] = data.FirstOrDefault().Username;
+
+                    ViewBag.UserNow = Session["FullName"].ToString();
+
                     return RedirectToAction("Index");
                 }
                 else
@@ -122,7 +119,6 @@ namespace WebAppStudomat.Controllers
                     return RedirectToAction("Login");
                 }
             }
-            ViewBag.UserNow = "sss";
             return View();
 
         }
