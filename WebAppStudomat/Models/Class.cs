@@ -47,6 +47,14 @@ namespace WebAppStudomat.Models
             }
         }
 
+        public string MajorSemesterNameEcts
+        {
+            get
+            {
+                return Major.Name + " (" + Semester + " sem.) - " + Name + " (" + NumberOfECTS + " ECTS)";
+            }
+        }
+
         public string HoursOfWork
         {
             get

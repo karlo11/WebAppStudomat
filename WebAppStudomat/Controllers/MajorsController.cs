@@ -17,7 +17,8 @@ namespace WebAppStudomat.Controllers
         // GET: Majors
         public ActionResult Index()
         {
-            return View(db.Majors.ToList());
+            return View(db.Majors.ToList()
+                .OrderBy(x => x.Name));
         }
 
         // GET: Majors/Details/5

@@ -17,7 +17,8 @@ namespace WebAppStudomat.Controllers
         // GET: Teachers
         public ActionResult Index()
         {
-            return View(db.Teachers.ToList());
+            return View(db.Teachers.ToList()
+                .OrderBy(x => x.OIB));
         }
 
         // GET: Teachers/Details/5

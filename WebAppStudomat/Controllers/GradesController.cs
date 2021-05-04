@@ -18,7 +18,10 @@ namespace WebAppStudomat.Controllers
         public ActionResult Index()
         {
             var grades = db.Grades.Include(g => g.Class).Include(g => g.Student);
-            return View(grades.ToList());
+            return View(grades.ToList()
+                .OrderBy(x => x.Class.Name)
+                .ThenByDescending(y => y.GradeInt)
+                .ThenBy(z => z.Student.FullName));
         }
 
         // GET: Grades/Details/5
@@ -39,7 +42,7 @@ namespace WebAppStudomat.Controllers
         // GET: Grades/Create
         public ActionResult Create()
         {
-            ViewBag.ClassID = new SelectList(db.Classes, "ID", "NameAndSemester");
+            ViewBag.ClassID = new SelectList(db.Classes, "ID", "MajorSemesterNameEcts");
             ViewBag.StudentID = new SelectList(db.Students, "ID", "JMBAGAndFullName");
             return View();
         }
@@ -59,7 +62,7 @@ namespace WebAppStudomat.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ClassID = new SelectList(db.Classes, "ID", "NameAndSemester", grade.ClassID);
+            ViewBag.ClassID = new SelectList(db.Classes, "ID", "MajorSemesterNameEcts", grade.ClassID);
             ViewBag.StudentID = new SelectList(db.Students, "ID", "JMBAGAndFullName", grade.StudentID);
             return View(grade);
         }
@@ -76,7 +79,7 @@ namespace WebAppStudomat.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ClassID = new SelectList(db.Classes, "ID", "NameAndSemester", grade.ClassID);
+            ViewBag.ClassID = new SelectList(db.Classes, "ID", "MajorSemesterNameEcts", grade.ClassID);
             ViewBag.StudentID = new SelectList(db.Students, "ID", "JMBAGAndFullName", grade.StudentID);
             return View(grade);
         }
@@ -95,7 +98,7 @@ namespace WebAppStudomat.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ClassID = new SelectList(db.Classes, "ID", "NameAndSemester", grade.ClassID);
+            ViewBag.ClassID = new SelectList(db.Classes, "ID", "MajorSemesterNameEcts", grade.ClassID);
             ViewBag.StudentID = new SelectList(db.Students, "ID", "JMBAGAndFullName", grade.StudentID);
             return View(grade);
         }
