@@ -64,5 +64,13 @@ namespace WebAppStudomat.Models
                     + " + " + HoursOfHomework;
             }
         }
+
+        public int TotalHours
+        {
+            get
+            {
+                return (int)(HoursOfAudit + HoursOfConstr + HoursOfHomework + HoursOfLab + HoursOfLectures + HoursOfSeminar);
+            }
+        }
     }
 }
