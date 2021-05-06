@@ -1,0 +1,1607 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report MustUnderstand="df" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily">
+  <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource1">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString>data source="(local)\SQLEXPRESS";initial catalog=WebAppStudomat.Models.CollegeDbContext</ConnectString>
+        <IntegratedSecurity>true</IntegratedSecurity>
+      </ConnectionProperties>
+      <rd:SecurityType>Integrated</rd:SecurityType>
+      <rd:DataSourceID>42661df0-194f-4ddd-895c-5bacdfe27641</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="TeacherNumber">
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <CommandText>SELECT 
+	t.ID,
+	t.Title + ' ' + t.FirstName + ' ' + t.LastName AS TeacherName,
+	COUNT(c.Name) AS NumberOfClasses
+FROM 
+	Teachers t
+LEFT JOIN
+	Classes c
+		ON c.TeacherID = t.ID
+GROUP BY
+	t.ID,
+	t.Title + ' ' + t.FirstName + ' ' + t.LastName
+ORDER BY
+	COUNT(c.Name) DESC</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="ID">
+          <DataField>ID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="TeacherName">
+          <DataField>TeacherName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NumberOfClasses">
+          <DataField>NumberOfClasses</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="TitlesNumber">
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <CommandText>SELECT 
+	t.Title,
+	COUNT(t.Title) AS TitleCount
+FROM 
+	Teachers t
+GROUP BY
+	t.Title
+ORDER BY
+	COUNT(t.Title) DESC</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="Title">
+          <DataField>Title</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TitleCount">
+          <DataField>TitleCount</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="Teachers">
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <CommandText>SELECT 
+	t.ID,
+	t.Title + ' ' + t.FirstName + ' ' + t.LastName AS TeacherNameWithTitle,
+	t.LastName,
+	c.Name,
+	AVG(CAST(g.GradeInt AS float)) AS AverageGrade
+FROM
+	Teachers t
+RIGHT JOIN
+	Classes c
+		ON c.TeacherID = t.ID
+RIGHT JOIN
+	Grades g
+		ON g.ClassID = c.ID
+GROUP BY
+	t.ID,
+	t.Title + ' ' + t.FirstName + ' ' + t.LastName,
+	t.LastName,
+	c.Name
+ORDER BY
+	t.LastName,
+	c.Name ASC</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="ID">
+          <DataField>ID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="TeacherNameWithTitle">
+          <DataField>TeacherNameWithTitle</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="LastName">
+          <DataField>LastName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="AverageGrade">
+          <DataField>AverageGrade</DataField>
+          <rd:TypeName>System.Double</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+          <Tablix Name="Tablix4">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>5.2276cm</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.8cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="AverageGrade">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!AverageGrade.Value</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Format>0.000;(0.000)</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>AverageGrade</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="TeacherNameWithTitle">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!TeacherNameWithTitle.Value</GroupExpression>
+                    </GroupExpressions>
+                  </Group>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!LastName.Value</Value>
+                    </SortExpression>
+                  </SortExpressions>
+                  <TablixHeader>
+                    <Size>6.93144cm</Size>
+                    <CellContents>
+                      <Textbox Name="TeacherNameWithTitle">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>=Fields!TeacherNameWithTitle.Value</Value>
+                                <Style>
+                                  <FontWeight>Bold</FontWeight>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style>
+                              <TextAlign>Center</TextAlign>
+                            </Style>
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>TeacherNameWithTitle</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>Solid</Style>
+                          </Border>
+                          <VerticalAlign>Middle</VerticalAlign>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixHeader>
+                  <TablixMembers>
+                    <TablixMember>
+                      <Group Name="Name">
+                        <GroupExpressions>
+                          <GroupExpression>=Fields!Name.Value</GroupExpression>
+                        </GroupExpressions>
+                      </Group>
+                      <SortExpressions>
+                        <SortExpression>
+                          <Value>=Fields!AverageGrade.Value</Value>
+                          <Direction>Descending</Direction>
+                        </SortExpression>
+                      </SortExpressions>
+                      <TablixHeader>
+                        <Size>8.43957cm</Size>
+                        <CellContents>
+                          <Textbox Name="Name">
+                            <CanGrow>true</CanGrow>
+                            <KeepTogether>true</KeepTogether>
+                            <Paragraphs>
+                              <Paragraph>
+                                <TextRuns>
+                                  <TextRun>
+                                    <Value>=Fields!Name.Value</Value>
+                                    <Style />
+                                  </TextRun>
+                                </TextRuns>
+                                <Style>
+                                  <TextAlign>Center</TextAlign>
+                                </Style>
+                              </Paragraph>
+                            </Paragraphs>
+                            <rd:DefaultName>Name</rd:DefaultName>
+                            <Style>
+                              <Border>
+                                <Color>LightGrey</Color>
+                                <Style>Solid</Style>
+                              </Border>
+                              <VerticalAlign>Middle</VerticalAlign>
+                              <PaddingLeft>2pt</PaddingLeft>
+                              <PaddingRight>2pt</PaddingRight>
+                              <PaddingTop>2pt</PaddingTop>
+                              <PaddingBottom>2pt</PaddingBottom>
+                            </Style>
+                          </Textbox>
+                        </CellContents>
+                      </TablixHeader>
+                      <TablixMembers>
+                        <TablixMember />
+                      </TablixMembers>
+                    </TablixMember>
+                  </TablixMembers>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>Teachers</DataSetName>
+            <SortExpressions>
+              <SortExpression>
+                <Value>=Fields!AverageGrade.Value</Value>
+                <Direction>Descending</Direction>
+              </SortExpression>
+            </SortExpressions>
+            <Top>1.28764cm</Top>
+            <Left>0.2cm</Left>
+            <Height>0.8cm</Height>
+            <Width>20.59861cm</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
+          <Textbox Name="Textbox71">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Teacher's grades by classes</Value>
+                    <Style>
+                      <FontWeight>Bold</FontWeight>
+                      <Color>DimGray</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox71</rd:DefaultName>
+            <Top>0.52035cm</Top>
+            <Left>0.19861cm</Left>
+            <Height>0.5909cm</Height>
+            <Width>20.6cm</Width>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <VerticalAlign>Middle</VerticalAlign>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Line Name="Line1">
+            <Top>2.37243cm</Top>
+            <Left>0.19861cm</Left>
+            <Height>0cm</Height>
+            <Width>20.6cm</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Color>Gray</Color>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+          </Line>
+          <Chart Name="Chart1">
+            <ChartCategoryHierarchy>
+              <ChartMembers>
+                <ChartMember>
+                  <Label />
+                </ChartMember>
+              </ChartMembers>
+            </ChartCategoryHierarchy>
+            <ChartSeriesHierarchy>
+              <ChartMembers>
+                <ChartMember>
+                  <Label>Number Of Classes</Label>
+                </ChartMember>
+                <ChartMember>
+                  <Label>Number Of Classes</Label>
+                </ChartMember>
+              </ChartMembers>
+            </ChartSeriesHierarchy>
+            <ChartData>
+              <ChartSeriesCollection>
+                <ChartSeries Name="NumberOfClasses">
+                  <ChartDataPoints>
+                    <ChartDataPoint>
+                      <ChartDataPointValues>
+                        <Y>=COUNT(IIF(Fields!NumberOfClasses.Value &gt;1,1,NOTHING))</Y>
+                      </ChartDataPointValues>
+                      <ChartDataLabel>
+                        <Style />
+                        <UseValueAsLabel>true</UseValueAsLabel>
+                        <Visible>true</Visible>
+                      </ChartDataLabel>
+                      <Style />
+                      <ChartMarker>
+                        <Style />
+                      </ChartMarker>
+                      <DataElementOutput>Output</DataElementOutput>
+                      <ChartItemInLegend>
+                        <LegendText>More than 1</LegendText>
+                      </ChartItemInLegend>
+                    </ChartDataPoint>
+                  </ChartDataPoints>
+                  <Type>Shape</Type>
+                  <Style />
+                  <ChartEmptyPoints>
+                    <Style />
+                    <ChartMarker>
+                      <Style />
+                    </ChartMarker>
+                    <ChartDataLabel>
+                      <Style />
+                    </ChartDataLabel>
+                  </ChartEmptyPoints>
+                  <ValueAxisName>Primary</ValueAxisName>
+                  <CategoryAxisName>Primary</CategoryAxisName>
+                  <ChartSmartLabel>
+                    <CalloutLineColor>Black</CalloutLineColor>
+                    <MinMovingDistance>0pt</MinMovingDistance>
+                  </ChartSmartLabel>
+                </ChartSeries>
+                <ChartSeries Name="Series">
+                  <ChartDataPoints>
+                    <ChartDataPoint>
+                      <ChartDataPointValues>
+                        <Y>=COUNT(IIF(Fields!NumberOfClasses.Value &lt;2,1,NOTHING))</Y>
+                      </ChartDataPointValues>
+                      <ChartDataLabel>
+                        <Style />
+                        <UseValueAsLabel>true</UseValueAsLabel>
+                        <Visible>true</Visible>
+                      </ChartDataLabel>
+                      <Style />
+                      <ChartMarker>
+                        <Style />
+                      </ChartMarker>
+                      <DataElementOutput>Output</DataElementOutput>
+                      <ChartItemInLegend>
+                        <LegendText>1 or less</LegendText>
+                      </ChartItemInLegend>
+                    </ChartDataPoint>
+                  </ChartDataPoints>
+                  <Type>Shape</Type>
+                  <Style />
+                  <ChartEmptyPoints>
+                    <Style />
+                    <ChartMarker>
+                      <Style />
+                    </ChartMarker>
+                    <ChartDataLabel>
+                      <Style />
+                    </ChartDataLabel>
+                  </ChartEmptyPoints>
+                  <ValueAxisName>Primary</ValueAxisName>
+                  <CategoryAxisName>Primary</CategoryAxisName>
+                  <ChartSmartLabel>
+                    <CalloutLineColor>Black</CalloutLineColor>
+                    <MinMovingDistance>0pt</MinMovingDistance>
+                  </ChartSmartLabel>
+                </ChartSeries>
+              </ChartSeriesCollection>
+            </ChartData>
+            <ChartAreas>
+              <ChartArea Name="Default">
+                <ChartCategoryAxes>
+                  <ChartAxis Name="Primary">
+                    <Style>
+                      <Border>
+                        <Color>Gainsboro</Color>
+                        <Style>None</Style>
+                      </Border>
+                      <FontSize>8pt</FontSize>
+                      <Color>#5c5c5c</Color>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                        <Color>#5c5c5c</Color>
+                      </Style>
+                    </ChartAxisTitle>
+                    <ChartMajorGridLines>
+                      <Enabled>False</Enabled>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                        </Border>
+                      </Style>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                        </Border>
+                      </Style>
+                      <Length>0.5</Length>
+                    </ChartMinorTickMarks>
+                    <CrossAt>NaN</CrossAt>
+                    <Minimum>NaN</Minimum>
+                    <Maximum>NaN</Maximum>
+                    <ChartAxisScaleBreak>
+                      <Style />
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                  <ChartAxis Name="Secondary">
+                    <Style>
+                      <Border>
+                        <Color>Gainsboro</Color>
+                        <Style>None</Style>
+                      </Border>
+                      <FontSize>8pt</FontSize>
+                      <Color>#5c5c5c</Color>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                        <Color>#5c5c5c</Color>
+                      </Style>
+                    </ChartAxisTitle>
+                    <ChartMajorGridLines>
+                      <Enabled>False</Enabled>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                        </Border>
+                      </Style>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                        </Border>
+                      </Style>
+                      <Length>0.5</Length>
+                    </ChartMinorTickMarks>
+                    <CrossAt>NaN</CrossAt>
+                    <Location>Opposite</Location>
+                    <Minimum>NaN</Minimum>
+                    <Maximum>NaN</Maximum>
+                    <ChartAxisScaleBreak>
+                      <Style />
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                </ChartCategoryAxes>
+                <ChartValueAxes>
+                  <ChartAxis Name="Primary">
+                    <Style>
+                      <Border>
+                        <Color>Gainsboro</Color>
+                        <Style>None</Style>
+                      </Border>
+                      <FontSize>8pt</FontSize>
+                      <Color>#5c5c5c</Color>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                        <Color>#5c5c5c</Color>
+                      </Style>
+                    </ChartAxisTitle>
+                    <ChartMajorGridLines>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                        </Border>
+                      </Style>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                        </Border>
+                      </Style>
+                      <Length>0.5</Length>
+                    </ChartMinorTickMarks>
+                    <CrossAt>NaN</CrossAt>
+                    <Minimum>NaN</Minimum>
+                    <Maximum>NaN</Maximum>
+                    <ChartAxisScaleBreak>
+                      <Style />
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                  <ChartAxis Name="Secondary">
+                    <Style>
+                      <Border>
+                        <Color>Gainsboro</Color>
+                        <Style>None</Style>
+                      </Border>
+                      <FontSize>8pt</FontSize>
+                      <Color>#5c5c5c</Color>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                        <Color>#5c5c5c</Color>
+                      </Style>
+                    </ChartAxisTitle>
+                    <ChartMajorGridLines>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                        </Border>
+                      </Style>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                        </Border>
+                      </Style>
+                      <Length>0.5</Length>
+                    </ChartMinorTickMarks>
+                    <CrossAt>NaN</CrossAt>
+                    <Location>Opposite</Location>
+                    <Minimum>NaN</Minimum>
+                    <Maximum>NaN</Maximum>
+                    <ChartAxisScaleBreak>
+                      <Style />
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                </ChartValueAxes>
+                <Style>
+                  <BackgroundColor>#00ffffff</BackgroundColor>
+                  <BackgroundGradientType>None</BackgroundGradientType>
+                </Style>
+              </ChartArea>
+            </ChartAreas>
+            <ChartLegends>
+              <ChartLegend Name="Default">
+                <Style>
+                  <BackgroundGradientType>None</BackgroundGradientType>
+                  <FontSize>8pt</FontSize>
+                </Style>
+                <Position>RightCenter</Position>
+                <DockOutsideChartArea>true</DockOutsideChartArea>
+                <ChartLegendTitle>
+                  <Caption />
+                  <Style>
+                    <FontSize>8pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </ChartLegendTitle>
+                <HeaderSeparatorColor>Black</HeaderSeparatorColor>
+                <ColumnSeparatorColor>Black</ColumnSeparatorColor>
+              </ChartLegend>
+            </ChartLegends>
+            <ChartTitles>
+              <ChartTitle Name="Default">
+                <Caption>Ratio of teachers with 1 class and 1 or more classes</Caption>
+                <Style>
+                  <BackgroundGradientType>None</BackgroundGradientType>
+                  <FontSize>9pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <TextAlign>Left</TextAlign>
+                  <VerticalAlign>Top</VerticalAlign>
+                  <Color>DimGray</Color>
+                </Style>
+                <Position>TopLeft</Position>
+              </ChartTitle>
+            </ChartTitles>
+            <Palette>Pacific</Palette>
+            <ChartBorderSkin>
+              <Style>
+                <BackgroundColor>Gray</BackgroundColor>
+                <BackgroundGradientType>None</BackgroundGradientType>
+                <Color>White</Color>
+              </Style>
+            </ChartBorderSkin>
+            <ChartNoDataMessage Name="NoDataMessage">
+              <Caption>No Data Available</Caption>
+              <Style>
+                <BackgroundGradientType>None</BackgroundGradientType>
+                <FontWeight>Bold</FontWeight>
+                <TextAlign>General</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+            </ChartNoDataMessage>
+            <DataSetName>TeacherNumber</DataSetName>
+            <Top>2.76516cm</Top>
+            <Left>0.2cm</Left>
+            <Height>5.5cm</Height>
+            <Width>10.2cm</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Color>LightGrey</Color>
+                <Style>None</Style>
+              </Border>
+              <BackgroundColor>White</BackgroundColor>
+              <BackgroundGradientType>None</BackgroundGradientType>
+            </Style>
+          </Chart>
+          <Chart Name="Chart3">
+            <ChartCategoryHierarchy>
+              <ChartMembers>
+                <ChartMember>
+                  <Group Name="Chart3_CategoryGroup">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!Title.Value</GroupExpression>
+                    </GroupExpressions>
+                  </Group>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!TitleCount.Value</Value>
+                      <Direction>Descending</Direction>
+                    </SortExpression>
+                  </SortExpressions>
+                  <Label>=Fields!Title.Value</Label>
+                </ChartMember>
+              </ChartMembers>
+            </ChartCategoryHierarchy>
+            <ChartSeriesHierarchy>
+              <ChartMembers>
+                <ChartMember>
+                  <Label>Title Count</Label>
+                </ChartMember>
+              </ChartMembers>
+            </ChartSeriesHierarchy>
+            <ChartData>
+              <ChartSeriesCollection>
+                <ChartSeries Name="TitleCount">
+                  <ChartDataPoints>
+                    <ChartDataPoint>
+                      <ChartDataPointValues>
+                        <Y>=Sum(Fields!TitleCount.Value)</Y>
+                      </ChartDataPointValues>
+                      <ChartDataLabel>
+                        <Style />
+                        <UseValueAsLabel>true</UseValueAsLabel>
+                        <Visible>true</Visible>
+                      </ChartDataLabel>
+                      <Style />
+                      <ChartMarker>
+                        <Style />
+                      </ChartMarker>
+                      <DataElementOutput>Output</DataElementOutput>
+                    </ChartDataPoint>
+                  </ChartDataPoints>
+                  <Type>Shape</Type>
+                  <Style />
+                  <ChartEmptyPoints>
+                    <Style />
+                    <ChartMarker>
+                      <Style />
+                    </ChartMarker>
+                    <ChartDataLabel>
+                      <Style />
+                    </ChartDataLabel>
+                  </ChartEmptyPoints>
+                  <ValueAxisName>Primary</ValueAxisName>
+                  <CategoryAxisName>Primary</CategoryAxisName>
+                  <ChartSmartLabel>
+                    <CalloutLineColor>Black</CalloutLineColor>
+                    <MinMovingDistance>0pt</MinMovingDistance>
+                  </ChartSmartLabel>
+                </ChartSeries>
+              </ChartSeriesCollection>
+            </ChartData>
+            <ChartAreas>
+              <ChartArea Name="Default">
+                <ChartCategoryAxes>
+                  <ChartAxis Name="Primary">
+                    <Style>
+                      <Border>
+                        <Color>Gainsboro</Color>
+                        <Style>None</Style>
+                      </Border>
+                      <FontSize>8pt</FontSize>
+                      <Color>#5c5c5c</Color>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                        <Color>#5c5c5c</Color>
+                      </Style>
+                    </ChartAxisTitle>
+                    <ChartMajorGridLines>
+                      <Enabled>False</Enabled>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                        </Border>
+                      </Style>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                        </Border>
+                      </Style>
+                      <Length>0.5</Length>
+                    </ChartMinorTickMarks>
+                    <CrossAt>NaN</CrossAt>
+                    <Minimum>NaN</Minimum>
+                    <Maximum>NaN</Maximum>
+                    <ChartAxisScaleBreak>
+                      <Style />
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                  <ChartAxis Name="Secondary">
+                    <Style>
+                      <Border>
+                        <Color>Gainsboro</Color>
+                        <Style>None</Style>
+                      </Border>
+                      <FontSize>8pt</FontSize>
+                      <Color>#5c5c5c</Color>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                        <Color>#5c5c5c</Color>
+                      </Style>
+                    </ChartAxisTitle>
+                    <ChartMajorGridLines>
+                      <Enabled>False</Enabled>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                        </Border>
+                      </Style>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                        </Border>
+                      </Style>
+                      <Length>0.5</Length>
+                    </ChartMinorTickMarks>
+                    <CrossAt>NaN</CrossAt>
+                    <Location>Opposite</Location>
+                    <Minimum>NaN</Minimum>
+                    <Maximum>NaN</Maximum>
+                    <ChartAxisScaleBreak>
+                      <Style />
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                </ChartCategoryAxes>
+                <ChartValueAxes>
+                  <ChartAxis Name="Primary">
+                    <Style>
+                      <Border>
+                        <Color>Gainsboro</Color>
+                        <Style>None</Style>
+                      </Border>
+                      <FontSize>8pt</FontSize>
+                      <Color>#5c5c5c</Color>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                        <Color>#5c5c5c</Color>
+                      </Style>
+                    </ChartAxisTitle>
+                    <ChartMajorGridLines>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                        </Border>
+                      </Style>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                        </Border>
+                      </Style>
+                      <Length>0.5</Length>
+                    </ChartMinorTickMarks>
+                    <CrossAt>NaN</CrossAt>
+                    <Minimum>NaN</Minimum>
+                    <Maximum>NaN</Maximum>
+                    <ChartAxisScaleBreak>
+                      <Style />
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                  <ChartAxis Name="Secondary">
+                    <Style>
+                      <Border>
+                        <Color>Gainsboro</Color>
+                        <Style>None</Style>
+                      </Border>
+                      <FontSize>8pt</FontSize>
+                      <Color>#5c5c5c</Color>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                        <Color>#5c5c5c</Color>
+                      </Style>
+                    </ChartAxisTitle>
+                    <ChartMajorGridLines>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                        </Border>
+                      </Style>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Style>
+                        <Border>
+                          <Color>Gainsboro</Color>
+                        </Border>
+                      </Style>
+                      <Length>0.5</Length>
+                    </ChartMinorTickMarks>
+                    <CrossAt>NaN</CrossAt>
+                    <Location>Opposite</Location>
+                    <Minimum>NaN</Minimum>
+                    <Maximum>NaN</Maximum>
+                    <ChartAxisScaleBreak>
+                      <Style />
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                </ChartValueAxes>
+                <Style>
+                  <BackgroundColor>#00ffffff</BackgroundColor>
+                  <BackgroundGradientType>None</BackgroundGradientType>
+                </Style>
+              </ChartArea>
+            </ChartAreas>
+            <ChartLegends>
+              <ChartLegend Name="Default">
+                <Style>
+                  <BackgroundGradientType>None</BackgroundGradientType>
+                  <FontSize>8pt</FontSize>
+                </Style>
+                <Position>RightCenter</Position>
+                <DockOutsideChartArea>true</DockOutsideChartArea>
+                <ChartLegendTitle>
+                  <Caption />
+                  <Style>
+                    <FontSize>8pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </ChartLegendTitle>
+                <HeaderSeparatorColor>Black</HeaderSeparatorColor>
+                <ColumnSeparatorColor>Black</ColumnSeparatorColor>
+              </ChartLegend>
+            </ChartLegends>
+            <ChartTitles>
+              <ChartTitle Name="Default">
+                <Caption>Titles of teachers</Caption>
+                <Style>
+                  <BackgroundGradientType>None</BackgroundGradientType>
+                  <FontSize>9pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <TextAlign>Left</TextAlign>
+                  <VerticalAlign>Top</VerticalAlign>
+                  <Color>DimGray</Color>
+                </Style>
+                <Position>TopLeft</Position>
+              </ChartTitle>
+            </ChartTitles>
+            <Palette>Pacific</Palette>
+            <ChartBorderSkin>
+              <Style>
+                <BackgroundColor>Gray</BackgroundColor>
+                <BackgroundGradientType>None</BackgroundGradientType>
+                <Color>White</Color>
+              </Style>
+            </ChartBorderSkin>
+            <ChartNoDataMessage Name="NoDataMessage">
+              <Caption>No Data Available</Caption>
+              <Style>
+                <BackgroundGradientType>None</BackgroundGradientType>
+                <FontWeight>Bold</FontWeight>
+                <TextAlign>General</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+            </ChartNoDataMessage>
+            <DataSetName>TitlesNumber</DataSetName>
+            <Top>2.76516cm</Top>
+            <Left>10.60139cm</Left>
+            <Height>5.5cm</Height>
+            <Width>10.2cm</Width>
+            <ZIndex>4</ZIndex>
+            <Style>
+              <Border>
+                <Color>LightGrey</Color>
+                <Style>None</Style>
+              </Border>
+              <BackgroundColor>White</BackgroundColor>
+              <BackgroundGradientType>None</BackgroundGradientType>
+            </Style>
+          </Chart>
+          <Tablix Name="Tablix5">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>4.24738cm</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.8cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="AverageGrade2">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!AverageGrade.Value</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Format>0.000;(0.000)</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>AverageGrade</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="TeacherNameWithTitle2">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!TeacherNameWithTitle.Value</GroupExpression>
+                    </GroupExpressions>
+                    <Filters>
+                      <Filter>
+                        <FilterExpression>=Fields!AverageGrade.Value</FilterExpression>
+                        <Operator>TopPercent</Operator>
+                        <FilterValues>
+                          <FilterValue DataType="Float">50</FilterValue>
+                        </FilterValues>
+                      </Filter>
+                    </Filters>
+                  </Group>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!AverageGrade.Value</Value>
+                      <Direction>Descending</Direction>
+                    </SortExpression>
+                  </SortExpressions>
+                  <TablixHeader>
+                    <Size>5.95122cm</Size>
+                    <CellContents>
+                      <Textbox Name="TeacherNameWithTitle2">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>=Fields!TeacherNameWithTitle.Value</Value>
+                                <Style>
+                                  <FontWeight>Bold</FontWeight>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style>
+                              <TextAlign>Center</TextAlign>
+                            </Style>
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>TeacherNameWithTitle</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>Solid</Style>
+                          </Border>
+                          <VerticalAlign>Middle</VerticalAlign>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixHeader>
+                  <TablixMembers>
+                    <TablixMember />
+                  </TablixMembers>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>Teachers</DataSetName>
+            <SortExpressions>
+              <SortExpression>
+                <Value>=Fields!AverageGrade.Value</Value>
+                <Direction>Descending</Direction>
+              </SortExpression>
+            </SortExpressions>
+            <Top>9.70188cm</Top>
+            <Left>0.20139cm</Left>
+            <Height>0.8cm</Height>
+            <Width>10.19861cm</Width>
+            <ZIndex>5</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
+          <Textbox Name="Textbox72">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Teacher's grades overall</Value>
+                    <Style>
+                      <FontWeight>Bold</FontWeight>
+                      <Color>DimGray</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox71</rd:DefaultName>
+            <Top>8.93458cm</Top>
+            <Left>0.2cm</Left>
+            <Height>0.5909cm</Height>
+            <Width>20.6cm</Width>
+            <ZIndex>6</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <VerticalAlign>Middle</VerticalAlign>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Line Name="Line2">
+            <Top>8.59062cm</Top>
+            <Left>0.2cm</Left>
+            <Height>0cm</Height>
+            <Width>20.6cm</Width>
+            <ZIndex>7</ZIndex>
+            <Style>
+              <Border>
+                <Color>Gray</Color>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+          </Line>
+          <Tablix Name="Tablix6">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>4.24738cm</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.8cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="AverageGrade3">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!AverageGrade.Value</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Format>0.000;(0.000)</Format>
+                                    <Color>=IIF(Fields!AverageGrade.Value &lt;=3, "Red", "Black")</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>AverageGrade</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="TeacherNameWithTitle3">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!TeacherNameWithTitle.Value</GroupExpression>
+                    </GroupExpressions>
+                    <Filters>
+                      <Filter>
+                        <FilterExpression>=Fields!AverageGrade.Value</FilterExpression>
+                        <Operator>BottomPercent</Operator>
+                        <FilterValues>
+                          <FilterValue DataType="Float">50</FilterValue>
+                        </FilterValues>
+                      </Filter>
+                    </Filters>
+                  </Group>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!AverageGrade.Value</Value>
+                      <Direction>Descending</Direction>
+                    </SortExpression>
+                  </SortExpressions>
+                  <TablixHeader>
+                    <Size>5.95122cm</Size>
+                    <CellContents>
+                      <Textbox Name="TeacherNameWithTitle3">
+                        <CanGrow>true</CanGrow>
+                        <KeepTogether>true</KeepTogether>
+                        <Paragraphs>
+                          <Paragraph>
+                            <TextRuns>
+                              <TextRun>
+                                <Value>=Fields!TeacherNameWithTitle.Value</Value>
+                                <Style>
+                                  <FontWeight>Bold</FontWeight>
+                                </Style>
+                              </TextRun>
+                            </TextRuns>
+                            <Style>
+                              <TextAlign>Center</TextAlign>
+                            </Style>
+                          </Paragraph>
+                        </Paragraphs>
+                        <rd:DefaultName>TeacherNameWithTitle</rd:DefaultName>
+                        <Style>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>Solid</Style>
+                          </Border>
+                          <VerticalAlign>Middle</VerticalAlign>
+                          <PaddingLeft>2pt</PaddingLeft>
+                          <PaddingRight>2pt</PaddingRight>
+                          <PaddingTop>2pt</PaddingTop>
+                          <PaddingBottom>2pt</PaddingBottom>
+                        </Style>
+                      </Textbox>
+                    </CellContents>
+                  </TablixHeader>
+                  <TablixMembers>
+                    <TablixMember />
+                  </TablixMembers>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>Teachers</DataSetName>
+            <SortExpressions>
+              <SortExpression>
+                <Value>=Fields!AverageGrade.Value</Value>
+                <Direction>Descending</Direction>
+              </SortExpression>
+            </SortExpressions>
+            <Top>9.70188cm</Top>
+            <Left>10.60279cm</Left>
+            <Height>0.8cm</Height>
+            <Width>10.1986cm</Width>
+            <ZIndex>8</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
+        </ReportItems>
+        <Height>270mm</Height>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Body>
+      <Width>210mm</Width>
+      <Page>
+        <PageHeader>
+          <Height>21mm</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+          <ReportItems>
+            <Textbox Name="Textbox7">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Globals!ExecutionTime</Value>
+                      <Style>
+                        <FontSize>9pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox7</rd:DefaultName>
+              <Top>1.39884cm</Top>
+              <Left>16.83125cm</Left>
+              <Height>0.6cm</Height>
+              <Width>3.96875cm</Width>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox8">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>TEACHERS OVERVIEW</Value>
+                      <Style>
+                        <FontSize>16pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox8</rd:DefaultName>
+              <Top>0.55245cm</Top>
+              <Left>0.2cm</Left>
+              <Height>1cm</Height>
+              <Width>20.60139cm</Width>
+              <ZIndex>1</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+          </ReportItems>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>1pt</Width>
+            </BottomBorder>
+            <BackgroundColor>LightGrey</BackgroundColor>
+          </Style>
+        </PageHeader>
+        <PageHeight>29.7cm</PageHeight>
+        <PageWidth>21cm</PageWidth>
+        <ColumnSpacing>0.13cm</ColumnSpacing>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
+  <EmbeddedImages>
+    <EmbeddedImage Name="ID12125250_blackbargradientblackbarsgradient">
+      <MIMEType>image/png</MIMEType>
+      <ImageData>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</ImageData>
+    </EmbeddedImage>
+  </EmbeddedImages>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>3b3fba07-380e-4b83-91ce-2a75c1170558</rd:ReportID>
+</Report>
