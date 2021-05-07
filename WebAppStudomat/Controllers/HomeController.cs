@@ -37,6 +37,7 @@ namespace WebAppStudomat.Controllers
                     user.UserRole = UserRoles.Teacher;
                     db.Users.Add(user);
                     db.SaveChanges();
+
                     return RedirectToAction("Login");
                 }
                 else
@@ -45,6 +46,9 @@ namespace WebAppStudomat.Controllers
                     return View();
                 }
             }
+
+            ViewBag.error = "Incorrect input";
+
             return View();
         }
 
@@ -84,6 +88,7 @@ namespace WebAppStudomat.Controllers
                     Console.WriteLine("Error: " + ex.Message);
                 }
             }
+
             return byteToString;
         }
 
@@ -100,8 +105,8 @@ namespace WebAppStudomat.Controllers
         {
             if (ModelState.IsValid)
             {
-                var pass = GetMD5(password);
-                var data = db.Users.Where(x => x.Email == email && x.Password.Equals(pass)).ToList();
+                var encryptedPassword = GetMD5(password);
+                var data = db.Users.Where(x => x.Email == email && x.Password.Equals(encryptedPassword)).ToList();
                 if (data.Count() > 0)
                 {
                     Session["IdUser"] = data.FirstOrDefault().IdUser;

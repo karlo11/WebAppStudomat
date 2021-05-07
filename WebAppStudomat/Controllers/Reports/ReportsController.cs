@@ -1,11 +1,7 @@
 ﻿using Microsoft.Reporting.WebForms;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 
 namespace WebAppStudomat.Controllers.Reports
 {
@@ -24,17 +20,8 @@ namespace WebAppStudomat.Controllers.Reports
 
         private void LoadInitialReport()
         {
-            string ssrsUrl = null;
-            string ssrsInitialReport = null;
-            try
-            {
-                ssrsUrl = ConfigurationManager.AppSettings[configSSRSUrl].ToString();
-                ssrsInitialReport = ConfigurationManager.AppSettings[configSSRSInitialReport].ToString();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error: ", ex.ToString());
-            }
+            var ssrsUrl = ReadSetting(configSSRSUrl);
+            var ssrsInitialReport = ReadSetting(configSSRSInitialReport);
 
             var reportViewer = new ReportViewer
             {
@@ -54,6 +41,21 @@ namespace WebAppStudomat.Controllers.Reports
 
             reportViewer.ServerReport.ReportPath = ssrsInitialReport;
             ViewBag.ReportViewer = reportViewer;
+        }
+
+        private string ReadSetting(string key)
+        {
+            string settingUrl = null;
+            try
+            {
+                settingUrl = ConfigurationManager.AppSettings[key].ToString();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Not found: ", ex.ToString());
+            }
+
+            return settingUrl;
         }
     }
 }
