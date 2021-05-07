@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Report MustUnderstand="df" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily">
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
@@ -83,6 +83,15 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
+            <ActionInfo>
+              <Actions>
+                <Action>
+                  <Drillthrough>
+                    <ReportName>/Studomat/MutualClasses</ReportName>
+                  </Drillthrough>
+                </Action>
+              </Actions>
+            </ActionInfo>
             <Top>6.72606cm</Top>
             <Left>11.55911cm</Left>
             <Height>0.97896cm</Height>
@@ -128,6 +137,15 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
+            <ActionInfo>
+              <Actions>
+                <Action>
+                  <Drillthrough>
+                    <ReportName>/Studomat/GradesByYears</ReportName>
+                  </Drillthrough>
+                </Action>
+              </Actions>
+            </ActionInfo>
             <Top>5.57072cm</Top>
             <Left>11.55911cm</Left>
             <Height>0.97896cm</Height>
@@ -162,6 +180,15 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
+            <ActionInfo>
+              <Actions>
+                <Action>
+                  <Drillthrough>
+                    <ReportName>/Studomat/Majors</ReportName>
+                  </Drillthrough>
+                </Action>
+              </Actions>
+            </ActionInfo>
             <Top>5.57072cm</Top>
             <Left>5.63245cm</Left>
             <Height>0.97896cm</Height>
@@ -231,6 +258,15 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
+            <ActionInfo>
+              <Actions>
+                <Action>
+                  <Drillthrough>
+                    <ReportName>/Studomat/Classes</ReportName>
+                  </Drillthrough>
+                </Action>
+              </Actions>
+            </ActionInfo>
             <Top>6.72606cm</Top>
             <Left>5.63245cm</Left>
             <Height>0.97896cm</Height>
@@ -265,6 +301,15 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
+            <ActionInfo>
+              <Actions>
+                <Action>
+                  <Drillthrough>
+                    <ReportName>/Studomat/Teachers</ReportName>
+                  </Drillthrough>
+                </Action>
+              </Actions>
+            </ActionInfo>
             <Top>7.88141cm</Top>
             <Left>5.63245cm</Left>
             <Height>0.97896cm</Height>
@@ -330,5 +375,6 @@
     </GridLayoutDefinition>
   </ReportParametersLayout>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportServerUrl>http://localhost/ReportServer</rd:ReportServerUrl>
   <rd:ReportID>e36d7fac-8d64-4ff5-9bcc-1852c240f3ef</rd:ReportID>
 </Report>
