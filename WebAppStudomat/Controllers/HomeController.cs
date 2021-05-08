@@ -11,6 +11,11 @@ namespace WebAppStudomat.Controllers
     public class HomeController : Controller
     {
         public CollegeDbContext db = new CollegeDbContext();
+        private readonly string idUserProperty = nameof(Models.Users.User.IdUser);
+        private readonly string emailProperty = nameof(Models.Users.User.Email);
+        private readonly string fullNameProperty = nameof(Models.Users.User.FullName);
+        private readonly string usernameProperty = nameof(Models.Users.User.Username);
+        private readonly string userRoleProperty = nameof(Models.Users.User.UserRole);
 
         public ActionResult Index()
         {
@@ -34,9 +39,18 @@ namespace WebAppStudomat.Controllers
                 {
                     user.Password = GetMD5(user.Password);
                     db.Configuration.ValidateOnSaveEnabled = false;
+
+                    // default role
                     user.UserRole = UserRoles.Teacher;
                     db.Users.Add(user);
-                    db.SaveChanges();
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Unable to save changes: ", ex.ToString());
+                    }
 
                     return RedirectToAction("Login");
                 }
@@ -62,7 +76,7 @@ namespace WebAppStudomat.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error: " + ex.Message);
+                Console.WriteLine("Error on get bytes: " + ex.Message);
             }
 
             byte[] hash = null;
@@ -72,11 +86,10 @@ namespace WebAppStudomat.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error: " + ex.Message);
+                Console.WriteLine("Error on compute hash: " + ex.Message);
             }
 
             string byteToString = null;
-
             for (int i = 0; i < hash.Length; i++)
             {
                 try
@@ -85,7 +98,7 @@ namespace WebAppStudomat.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Error: " + ex.Message);
+                    Console.WriteLine("Error on ToString(): " + ex.Message);
                 }
             }
 
@@ -109,12 +122,12 @@ namespace WebAppStudomat.Controllers
                 var data = db.Users.Where(x => x.Email == email && x.Password.Equals(encryptedPassword)).ToList();
                 if (data.Count() > 0)
                 {
-                    Session["IdUser"] = data.FirstOrDefault().IdUser;
-                    Session["Email"] = data.FirstOrDefault().Email;
-                    Session["FullName"] = data.FirstOrDefault().FullName;
-                    Session["Username"] = data.FirstOrDefault().Username;
-
-                    ViewBag.UserNow = Session["FullName"].ToString();
+                    Session[idUserProperty] = data.FirstOrDefault().IdUser;
+                    Session[emailProperty] = data.FirstOrDefault().Email;
+                    Session[fullNameProperty] = data.FirstOrDefault().FullName;
+                    Session[usernameProperty] = data.FirstOrDefault().Username;
+                    Session[userRoleProperty] = data.FirstOrDefault().UserRole;
+                    ViewBag.UserNow = Session[fullNameProperty].ToString();
 
                     return RedirectToAction("Index");
                 }

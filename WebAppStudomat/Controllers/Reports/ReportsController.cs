@@ -2,9 +2,12 @@
 using System;
 using System.Configuration;
 using System.Web.Mvc;
+using WebAppStudomat.Attributes;
+using WebAppStudomat.Models.Users;
 
 namespace WebAppStudomat.Controllers.Reports
 {
+    [CustomAuthorize(UserRoles.Admin, UserRoles.Teacher)]
     public class ReportsController : Controller
     {
         private static readonly string configSSRSUrl = "SSRSReportUrl";

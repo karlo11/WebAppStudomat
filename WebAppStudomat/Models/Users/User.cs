@@ -8,18 +8,7 @@ namespace WebAppStudomat.Models.Users
         [Key]
         public int IdUser { get; set; }
 
-        public UserRoles userRole;
-        public UserRoles UserRole
-        {
-            get
-            {
-                return userRole;
-            }
-            set
-            {
-                userRole = UserRoles.Teacher;
-            }
-        }
+        public UserRoles UserRole { get; set; }
 
         public string Username { get; set; }
         [Required]

@@ -34,7 +34,7 @@
                             @if (@Session["FullName"] != null)
                             {
                                 <li class="nav-item">
-                                    <a class="nav-item">Hello, @Session["FullName"].ToString()</a>
+                                    <a class="nav-item">Hello, @(Session["FullName"].ToString()) (@(Session["UserRole"].ToString()))</a>
                                 </li>
                             }
                             <li class="nav-item">
