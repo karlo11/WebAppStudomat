@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -33,12 +34,15 @@ namespace WebAppStudomat.Models
 
         public int? TeacherID { get; set; }
         [ForeignKey("TeacherID")]
-        public virtual Teacher Teacher { get; set; }
+        [JsonIgnore]
+        public Teacher Teacher { get; set; }
 
         public int? MajorID { get; set; }
         [ForeignKey("MajorID")]
-        public virtual Major Major { get; set; }
+        [JsonIgnore]
+        public Major Major { get; set; }
 
+        [JsonIgnore]
         public string NameAndSemester
         {
             get
@@ -47,14 +51,16 @@ namespace WebAppStudomat.Models
             }
         }
 
+        [JsonIgnore]
         public string MajorSemesterNameEcts
         {
             get
             {
-                return Major.Name + " (" + Semester + " sem.) - " + Name + " (" + NumberOfECTS + " ECTS)";
+                return /*Major.Name + */" (" + Semester + " sem.) - " + Name + " (" + NumberOfECTS + " ECTS)";
             }
         }
 
+        [JsonIgnore]
         public string HoursOfWork
         {
             get
@@ -65,6 +71,7 @@ namespace WebAppStudomat.Models
             }
         }
 
+        [JsonIgnore]
         public int TotalHours
         {
             get
