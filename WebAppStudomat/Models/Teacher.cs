@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace WebAppStudomat.Models
         public string Address { get; set; }
         public string Email { get; set; }
 
+        [JsonIgnore]
         public string FullNameWithTitle
         {
             get
@@ -27,6 +29,8 @@ namespace WebAppStudomat.Models
                 return Title + " " + FirstName + " " + LastName;
             }
         }
+
+        [JsonIgnore]
         public string FullName
         {
             get

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebAppStudomat.Models.Users
@@ -17,10 +18,12 @@ namespace WebAppStudomat.Models.Users
         public string Email { get; set; }
 
         [Required]
+        [JsonIgnore]
         public string Password { get; set; }
         [Required]
         [NotMapped]
         [Compare("Password")]
+        [JsonIgnore]
         public string ConfirmPassword { get; set; }
     }
 }

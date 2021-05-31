@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,15 +15,19 @@ namespace WebAppStudomat.Models
 
         public int? StudentID { get; set; }
         [ForeignKey("StudentID")]
+        [JsonIgnore]
         public virtual Student Student { get; set; }
+
         public int? ClassID { get; set; }
         [ForeignKey("ClassID")]
+        [JsonIgnore]
         public virtual Class Class { get; set; }
 
         [Required]
         [Range(1, 5)]
         public int GradeInt { get; set; }
 
+        [JsonIgnore]
         public DateTime _dateOfGrade;
         public DateTime DateOfGrade
         {

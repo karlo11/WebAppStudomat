@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,9 +19,10 @@ namespace WebAppStudomat.Models
         public int FoundationYear { get; set; }
         public string DeanFirstName { get; set; }
         public string DeanLastName { get; set; }
-
+        
         public virtual ICollection<Major> Majors { get; set; }
 
+        [JsonIgnore]
         public string DeanFullName
         {
             get

@@ -172,7 +172,13 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Attributes\CustomAuthorize.cs" />
     <Compile Include="Controllers\api\ClassDataController.cs" />
+    <Compile Include="Controllers\api\CollegeDataController.cs" />
     <Compile Include="Controllers\api\DefaultController.cs" />
+    <Compile Include="Controllers\api\GradeDataController.cs" />
+    <Compile Include="Controllers\api\MajorDataController.cs" />
+    <Compile Include="Controllers\api\StudentDataController.cs" />
+    <Compile Include="Controllers\api\TeacherDataController.cs" />
+    <Compile Include="Controllers\api\User\UserDataController.cs" />
     <Compile Include="Controllers\ClassesController.cs" />
     <Compile Include="Controllers\CollegesController.cs" />
     <Compile Include="Controllers\GradesController.cs" />
