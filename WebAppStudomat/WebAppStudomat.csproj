@@ -173,9 +173,17 @@
     <Compile Include="Attributes\CustomAuthorize.cs" />
     <Compile Include="Controllers\api\ClassDataController.cs" />
     <Compile Include="Controllers\api\CollegeDataController.cs" />
+    <Compile Include="Controllers\api\Controller\ClassesDataController.cs" />
+    <Compile Include="Controllers\api\Controller\CollegesDataController.cs" />
+    <Compile Include="Controllers\api\Controller\GradesDataController.cs" />
+    <Compile Include="Controllers\api\Controller\MajorsDataController.cs" />
+    <Compile Include="Controllers\api\Controller\StudentsDataController.cs" />
+    <Compile Include="Controllers\api\Controller\TeachersDataController.cs" />
+    <Compile Include="Controllers\api\Controller\TestWrapperClassDataController.cs" />
     <Compile Include="Controllers\api\DefaultController.cs" />
     <Compile Include="Controllers\api\GradeDataController.cs" />
     <Compile Include="Controllers\api\MajorDataController.cs" />
+    <Compile Include="Controllers\api\Model\TestWrapperClassData.cs" />
     <Compile Include="Controllers\api\StudentDataController.cs" />
     <Compile Include="Controllers\api\TeacherDataController.cs" />
     <Compile Include="Controllers\api\User\UserDataController.cs" />

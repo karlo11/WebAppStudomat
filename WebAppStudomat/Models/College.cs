@@ -19,7 +19,8 @@ namespace WebAppStudomat.Models
         public int FoundationYear { get; set; }
         public string DeanFirstName { get; set; }
         public string DeanLastName { get; set; }
-        
+
+        [JsonIgnore]
         public virtual ICollection<Major> Majors { get; set; }
 
         [JsonIgnore]
